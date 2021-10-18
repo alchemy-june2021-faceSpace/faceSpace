@@ -92,9 +92,7 @@ describe('faceSpace /posts routes', () => {
 
     const post = await Post.insert(testPost);
 
-    const res = await (
-      await request(app).patch('/posts/1')
-    ).send({
+    const res = await request(app).patch('/posts/1').send({
       notifications: true,
       text: 'text here',
       media: 'media.png',

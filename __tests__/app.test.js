@@ -6,7 +6,7 @@ const setup = require('../data/setup.js');
 describe('faceSpace routes', () => {
   beforeEach(() => {
     return setup(pool);
-  }, 10000);
+  });
 
   it('should evaluate 1+1', () => {
     const two = 1 + 1;

@@ -21,6 +21,13 @@ const standardUser = {
   avatar: 'image.png',
 };
 
+const testPost = {
+  username: standardUser.username,
+  notifications: false,
+  text: 'text-here',
+  media: 'media.gif',
+};
+
 describe('faceSpace /posts routes', () => {
   beforeEach(() => {
     return setup(pool);
@@ -44,15 +51,10 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
-  it('should get a post by id', async () => {
+  it('should GET a post by id', async () => {
     const user = await User.insert(standardUser);
 
-    const post = await Post.insert({
-      username: user.username,
-      notifications: false,
-      text: 'text-here',
-      media: 'media.gif',
-    });
+    const post = await Post.insert(testPost);
 
     const res = await request(app).get('/posts/1');
 
@@ -65,15 +67,10 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
-  it('should get all posts', async () => {
+  it('should GET all posts', async () => {
     const user = await User.insert(standardUser);
 
-    const post = await Post.insert({
-      username: user.username,
-      notifications: false,
-      text: 'text-here',
-      media: 'media.gif',
-    });
+    const post = await Post.insert(testPost);
 
     const res = await request(app).get('/posts');
 
@@ -88,6 +85,28 @@ describe('faceSpace /posts routes', () => {
         },
       ])
     );
+  });
+
+  it('should PATCH a post by id', async () => {
+    const user = await User.insert(standardUser);
+
+    const post = await Post.insert(testPost);
+
+    const res = await (
+      await request(app).patch('/posts/1')
+    ).send({
+      notifications: true,
+      text: 'text here',
+      media: 'media.png',
+    });
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: user.username,
+      notifications: true,
+      text: 'text here',
+      media: 'media.png',
+    });
   });
 
   afterAll(() => {

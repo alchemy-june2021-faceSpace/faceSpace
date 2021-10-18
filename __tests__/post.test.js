@@ -77,15 +77,17 @@ describe('faceSpace /posts routes', () => {
 
     const res = await request(app).get('/posts');
 
-    expect(res.body).toEqual([
-      {
-        id: '1',
-        username: user.username,
-        notifications: false,
-        text: 'text-here',
-        media: 'media.gif',
-      },
-    ]);
+    expect(res.body).toEqual(
+      expect.arrayContaining([
+        {
+          id: expect.any(String),
+          username: expect.any(String),
+          notifications: expect.anything(),
+          text: expect.any(String),
+          media: expect.any(String),
+        },
+      ])
+    );
   });
 
   afterAll(() => {

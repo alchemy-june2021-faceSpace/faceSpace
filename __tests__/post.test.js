@@ -33,7 +33,7 @@ describe('faceSpace /posts routes', () => {
     return setup(pool);
   }, 10000);
 
-  it('it should create a new post', async () => {
+  it('it should POST a new post', async () => {
     const user = await User.insert(standardUser);
 
     const res = await request(app).post('/posts').send({
@@ -104,6 +104,22 @@ describe('faceSpace /posts routes', () => {
       notifications: true,
       text: 'text here',
       media: 'media.png',
+    });
+  });
+
+  it('should DELETE a post by id', async () => {
+    const user = await User.insert(standardUser);
+
+    const post = await Post.insert(testPost);
+
+    const res = await request(app).delete('/posts/1');
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: user.username,
+      notifications: false,
+      text: 'text-here',
+      media: 'media.gif',
     });
   });
 

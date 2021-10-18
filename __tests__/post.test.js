@@ -54,7 +54,7 @@ describe('faceSpace /posts routes', () => {
   it('should GET a post by id', async () => {
     const user = await User.insert(standardUser);
 
-    const post = await Post.insert(testPost);
+    await Post.insert(testPost);
 
     const res = await request(app).get('/posts/1');
 
@@ -68,9 +68,9 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should GET all posts', async () => {
-    const user = await User.insert(standardUser);
+    await User.insert(standardUser);
 
-    const post = await Post.insert(testPost);
+    await Post.insert(testPost);
 
     const res = await request(app).get('/posts');
 
@@ -90,7 +90,7 @@ describe('faceSpace /posts routes', () => {
   it('should PATCH a post by id', async () => {
     const user = await User.insert(standardUser);
 
-    const post = await Post.insert(testPost);
+    await Post.insert(testPost);
 
     const res = await request(app).patch('/posts/1').send({
       notifications: true,
@@ -110,7 +110,7 @@ describe('faceSpace /posts routes', () => {
   it('should DELETE a post by id', async () => {
     const user = await User.insert(standardUser);
 
-    const post = await Post.insert(testPost);
+    await Post.insert(testPost);
 
     const res = await request(app).delete('/posts/1');
 

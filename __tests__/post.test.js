@@ -16,16 +16,18 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
+const standardUser = {
+  username: 'test-user',
+  avatar: 'image.png',
+};
+
 describe('faceSpace /posts routes', () => {
   beforeEach(() => {
     return setup(pool);
   }, 10000);
 
   it('it should create a new post', async () => {
-    const user = await User.insert({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+    const user = await User.insert(standardUser);
 
     const res = await request(app).post('/posts').send({
       text: 'text-here',
@@ -43,10 +45,7 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should get a post by id', async () => {
-    const user = await User.insert({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+    const user = await User.insert(standardUser);
 
     const post = await Post.insert({
       username: user.username,
@@ -64,6 +63,29 @@ describe('faceSpace /posts routes', () => {
       text: 'text-here',
       media: 'media.gif',
     });
+  });
+
+  it('should get all posts', async () => {
+    const user = await User.insert(standardUser);
+
+    const post = await Post.insert({
+      username: user.username,
+      notifications: false,
+      text: 'text-here',
+      media: 'media.gif',
+    });
+
+    const res = await request(app).get('/posts');
+
+    expect(res.body).toEqual([
+      {
+        id: '1',
+        username: user.username,
+        notifications: false,
+        text: 'text-here',
+        media: 'media.gif',
+      },
+    ]);
   });
 
   afterAll(() => {

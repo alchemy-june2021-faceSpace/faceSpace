@@ -17,14 +17,14 @@ CREATE TABLE posts (
     media_url TEXT NOT NULL
 );
 
--- CREATE TABLE comments (
---     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---     username TEXT NOT NULL,
---     comment TEXT NOT NULL,
---     post_id BIGINT NOT NULL,
---     FOREIGN KEY(username) REFERENCES users(google_username),
---     FOREIGN KEY(post_id) REFERENCES posts(id)
--- );
+CREATE TABLE comments (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    username TEXT NOT NULL,
+    comment TEXT NOT NULL,
+    post_id BIGINT NOT NULL,
+    FOREIGN KEY(username) REFERENCES users(google_username),
+    FOREIGN KEY(post_id) REFERENCES posts(id)
+);
 
 -- CREATE TABLE likes (
 --     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

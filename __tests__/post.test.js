@@ -12,7 +12,6 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
       username: 'test-user',
       avatar: 'image.png',
     };
-
     next();
   };
 });

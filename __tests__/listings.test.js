@@ -1,12 +1,9 @@
 const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
-// const { request } = require('express');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const seedDb = require('../lib/utils/seedDb.js');
 const seedSouth = require('../lib/utils/seedSouth.js');
-// const app = require('../lib/app.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {

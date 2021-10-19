@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/models/User');
 const Post = require('../lib/models/Post');
+const seedDb = require('../lib/utils/seedDb.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -29,9 +30,10 @@ const testPost = {
 };
 
 describe('faceSpace /posts routes', () => {
-  beforeEach(() => {
-    return setup(pool);
-  }, 10000);
+  beforeAll(async () => {
+    await setup(pool);
+    await seedDb();
+  });
 
   it('it should POST a new post', async () => {
     const user = await User.insert(standardUser);
@@ -43,7 +45,7 @@ describe('faceSpace /posts routes', () => {
     });
 
     expect(res.body).toEqual({
-      id: '1',
+      id: '21',
       username: user.username,
       notifications: false,
       text: 'text-here',
@@ -52,15 +54,15 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should GET a post by id', async () => {
-    const user = await User.insert(standardUser);
+    // const user = await User.insert(standardUser);
 
     await Post.insert(testPost);
 
-    const res = await request(app).get('/posts/1');
+    const res = await request(app).get('/posts/21');
 
     expect(res.body).toEqual({
-      id: '1',
-      username: user.username,
+      id: '21',
+      username: 'test-user',
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
@@ -68,7 +70,7 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should GET all posts', async () => {
-    await User.insert(standardUser);
+    // await User.insert(standardUser);
 
     await Post.insert(testPost);
 
@@ -88,19 +90,19 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should PATCH a post by id', async () => {
-    const user = await User.insert(standardUser);
+    // const user = await User.insert(standardUser);
 
     await Post.insert(testPost);
 
-    const res = await request(app).patch('/posts/1').send({
+    const res = await request(app).patch('/posts/21').send({
       notifications: true,
       text: 'text here',
       media: 'media.png',
     });
 
     expect(res.body).toEqual({
-      id: '1',
-      username: user.username,
+      id: '21',
+      username: 'test-user',
       notifications: true,
       text: 'text here',
       media: 'media.png',
@@ -108,18 +110,18 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should DELETE a post by id', async () => {
-    const user = await User.insert(standardUser);
+    // const user = await User.insert(standardUser);
 
     await Post.insert(testPost);
 
-    const res = await request(app).delete('/posts/1');
+    const res = await request(app).delete('/posts/21');
 
     expect(res.body).toEqual({
-      id: '1',
-      username: user.username,
-      notifications: false,
-      text: 'text-here',
-      media: 'media.gif',
+      id: '21',
+      username: 'test-user',
+      notifications: true,
+      text: 'text here',
+      media: 'media.png',
     });
   });
 

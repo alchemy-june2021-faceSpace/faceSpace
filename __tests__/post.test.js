@@ -3,8 +3,6 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/models/User');
-const Post = require('../lib/models/Post');
-// const seedDb = require('../lib/utils/seedDb.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -44,6 +42,10 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
+      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
+      // comments: expect.arrayContaining([
+      //   { username: expect.any(String), comment: expect.any(String) },
+      // ]),
     });
   });
 
@@ -64,6 +66,10 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
+      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
+      // comments: expect.arrayContaining([
+      //   { username: expect.any(String), comment: expect.any(String) },
+      // ]),
     });
   });
 
@@ -86,6 +92,10 @@ describe('faceSpace /posts routes', () => {
           notifications: expect.anything(),
           text: expect.any(String),
           media: expect.any(String),
+          // likes: expect.arrayContaining([{ username: expect.any(String) }]),
+          // comments: expect.arrayContaining([
+          //   { username: expect.any(String), comment: expect.any(String) },
+          // ]),
         },
       ])
     );
@@ -112,6 +122,10 @@ describe('faceSpace /posts routes', () => {
       notifications: true,
       text: 'text here',
       media: 'media.png',
+      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
+      // comments: expect.arrayContaining([
+      //   { username: expect.any(String), comment: expect.any(String) },
+      // ]),
     });
   });
 
@@ -132,6 +146,10 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
+      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
+      // comments: expect.arrayContaining([
+      //   { username: expect.any(String), comment: expect.any(String) },
+      // ]),
     });
   });
 

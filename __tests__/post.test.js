@@ -55,7 +55,7 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
-  it.only('should GET a post by id', async () => {
+  it('should GET a post by id', async () => {
     await User.insert(standardUser);
 
     await request(app).post('/posts').send({
@@ -75,10 +75,14 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
-  it('should GET all posts', async () => {
-    // await User.insert(standardUser);
+  it.only('should GET all posts', async () => {
+    await User.insert(standardUser);
 
-    await Post.insert(testPost);
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
 
     const res = await request(app).get('/posts');
 
@@ -86,7 +90,7 @@ describe('faceSpace /posts routes', () => {
       expect.arrayContaining([
         {
           id: expect.any(String),
-          username: expect.any(String),
+          userId: expect.any(String),
           notifications: expect.anything(),
           text: expect.any(String),
           media: expect.any(String),

@@ -5,7 +5,8 @@ DROP TABLE IF EXISTS comments CASCADE;
 
 CREATE TABLE users (
     google_username TEXT NOT NULL PRIMARY KEY,
-    google_avatar_url TEXT NOT NULL
+    google_email TEXT NOT NULL
+    google_avatar_url TEXT
 );
 
 CREATE TABLE posts (

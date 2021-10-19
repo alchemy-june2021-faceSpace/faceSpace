@@ -4,12 +4,13 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/models/User');
 const Post = require('../lib/models/Post');
-const seedDb = require('../lib/utils/seedDb.js');
+// const seedDb = require('../lib/utils/seedDb.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
       username: 'test-user',
+      email: 'test-email@email.com',
       avatar: 'image.png',
     };
 
@@ -19,11 +20,12 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 
 const standardUser = {
   username: 'test-user',
+  email: 'test-email@email.com',
   avatar: 'image.png',
 };
 
 const testPost = {
-  username: standardUser.username,
+  userId: '1',
   notifications: false,
   text: 'text-here',
   media: 'media.gif',
@@ -32,11 +34,11 @@ const testPost = {
 describe('faceSpace /posts routes', () => {
   beforeAll(async () => {
     await setup(pool);
-    await seedDb();
+    // await seedDb();
   });
 
   it('it should POST a new post', async () => {
-    const user = await User.insert(standardUser);
+    await User.insert(standardUser);
 
     const res = await request(app).post('/posts').send({
       text: 'text-here',
@@ -45,24 +47,28 @@ describe('faceSpace /posts routes', () => {
     });
 
     expect(res.body).toEqual({
-      id: '21',
-      username: user.username,
+      id: expect.any(String),
+      userId: expect.any(String),
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
     });
   });
 
-  it('should GET a post by id', async () => {
-    // const user = await User.insert(standardUser);
+  it.only('should GET a post by id', async () => {
+    await User.insert(standardUser);
 
-    await Post.insert(testPost);
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
 
-    const res = await request(app).get('/posts/21');
+    const res = await request(app).get('/posts/1');
 
     expect(res.body).toEqual({
-      id: '21',
-      username: 'test-user',
+      id: expect.any(String),
+      userId: expect.any(String),
       notifications: false,
       text: 'text-here',
       media: 'media.gif',

@@ -38,14 +38,14 @@ CREATE TABLE likes (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-CREATE TABLE listings (
-    id BIGINT GENERATED ALWAYS AS PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    description TEXT,
-    price MONEY NOT NULL,
-    photo TEXT NOT NULL,
-    -- category_id BIGINT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id),
-    -- FOREIGN KEY(category_id) REFERENCES categories(id)
-)
+-- CREATE TABLE listings (
+--     id BIGINT GENERATED ALWAYS AS PRIMARY KEY,
+--     user_id BIGINT NOT NULL,
+--     description TEXT,
+--     price MONEY NOT NULL,
+--     photo TEXT NOT NULL,
+--     -- category_id BIGINT NOT NULL,
+--     FOREIGN KEY(user_id) REFERENCES users(id),
+--     -- FOREIGN KEY(category_id) REFERENCES categories(id)
+-- )
 

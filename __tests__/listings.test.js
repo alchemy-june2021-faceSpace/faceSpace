@@ -65,6 +65,24 @@ describe.only('faceSpace routes', () => {
     });
   });
 
+  it('should patch a listing by id', async() => {
+    const res = await request(app)
+      .put('/listings/7')
+      .send({
+        description: 'great item',
+        price: '$14.50',
+        photo: 'image.png'
+      });
+
+    expect(res.body).toEqual({
+      id:'7',
+      userId: expect.any(String),
+      description: 'great item',
+      price: '$14.50',
+      photo: 'image.png'
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

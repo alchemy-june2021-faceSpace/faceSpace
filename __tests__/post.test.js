@@ -29,7 +29,7 @@ const testPost = {
   media: 'media.gif',
 };
 
-describe('faceSpace /posts routes', () => {
+describe.skip('faceSpace /posts routes', () => {
   beforeAll(async () => {
     await setup(pool);
     await seedDb();

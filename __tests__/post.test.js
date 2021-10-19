@@ -24,17 +24,9 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-const testPost = {
-  userId: '1',
-  notifications: false,
-  text: 'text-here',
-  media: 'media.gif',
-};
-
 describe('faceSpace /posts routes', () => {
-  beforeAll(async () => {
-    await setup(pool);
-    // await seedDb();
+  beforeEach(() => {
+    return setup(pool);
   });
 
   it('it should POST a new post', async () => {
@@ -99,7 +91,7 @@ describe('faceSpace /posts routes', () => {
     );
   });
 
-  it.only('should PATCH a post by id', async () => {
+  it('should PATCH a post by id', async () => {
     await User.insert(standardUser);
 
     await request(app).post('/posts').send({
@@ -124,18 +116,22 @@ describe('faceSpace /posts routes', () => {
   });
 
   it('should DELETE a post by id', async () => {
-    // const user = await User.insert(standardUser);
+    await User.insert(standardUser);
 
-    await Post.insert(testPost);
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
 
-    const res = await request(app).delete('/posts/21');
+    const res = await request(app).delete('/posts/1');
 
     expect(res.body).toEqual({
-      id: '21',
-      username: 'test-user',
-      notifications: true,
-      text: 'text here',
-      media: 'media.png',
+      id: '1',
+      userId: '1',
+      notifications: false,
+      text: 'text-here',
+      media: 'media.gif',
     });
   });
 

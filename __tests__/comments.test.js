@@ -29,6 +29,12 @@ describe('faceSpace /comments routes', () => {
   it('should POST a new comment', async () => {
     await User.insert(standardUser);
 
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
+
     const res = await request(app).post('/comments').send({
       comment: 'blah-blah',
       postId: '1',

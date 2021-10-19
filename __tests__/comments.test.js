@@ -9,6 +9,7 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
     req.user = {
       username: 'test-user',
       avatar: 'image.png',
+      email: 'blah@blah.com',
     };
     next();
   };
@@ -17,6 +18,7 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 const standardUser = {
   username: 'test-commenter',
   avatar: 'image.png',
+  email: 'blah@blah.com',
 };
 
 describe('faceSpace /comments routes', () => {
@@ -25,18 +27,18 @@ describe('faceSpace /comments routes', () => {
   });
 
   it('should POST a new comment', async () => {
-    const user = await User.insert(standardUser);
+    await User.insert(standardUser);
 
     const res = await request(app).post('/comments').send({
       comment: 'blah-blah',
-      post_id: '1',
+      postId: '1',
     });
 
     expect(res.body).toEqual({
       id: '1',
-      username: user.username,
+      userId: expect.any(String),
       comment: 'blah-blah',
-      post_id: '1',
+      postId: '1',
     });
   });
 });

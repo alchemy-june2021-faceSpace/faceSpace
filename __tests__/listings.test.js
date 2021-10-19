@@ -4,6 +4,7 @@ const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
 const seedSouth = require('../lib/utils/seedSouth.js');
+const Listing = require('../lib/models/Listing.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -81,6 +82,13 @@ describe.only('faceSpace routes', () => {
       price: '$14.50',
       photo: 'image.png'
     });
+  });
+
+  it('deletes listing but it\'s id', async () => {
+    const res = await request(app)
+      .delete('/listings/5');
+
+    expect(res.body).toEqual({});
   });
 
   afterAll(() => {

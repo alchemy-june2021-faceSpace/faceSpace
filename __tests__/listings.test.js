@@ -54,7 +54,7 @@ describe.only('faceSpace routes', () => {
     // const user = await User.insert(standardUser);
     const res = await request(app)
       .get('/listings/8');
-    console.log('AT LISTING ID TEST', res.body);
+    
     expect(res.body).toEqual({
       id: '8',
       userId: expect.any(String),
@@ -65,7 +65,7 @@ describe.only('faceSpace routes', () => {
     });
   });
 
-  it('should patch a listing by id', async() => {
+  it('should update a listing by id', async() => {
     const res = await request(app)
       .put('/listings/7')
       .send({

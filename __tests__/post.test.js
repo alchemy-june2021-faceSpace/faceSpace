@@ -75,7 +75,7 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
-  it.only('should GET all posts', async () => {
+  it('should GET all posts', async () => {
     await User.insert(standardUser);
 
     await request(app).post('/posts').send({
@@ -99,20 +99,24 @@ describe('faceSpace /posts routes', () => {
     );
   });
 
-  it('should PATCH a post by id', async () => {
-    // const user = await User.insert(standardUser);
+  it.only('should PATCH a post by id', async () => {
+    await User.insert(standardUser);
 
-    await Post.insert(testPost);
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
 
-    const res = await request(app).patch('/posts/21').send({
+    const res = await request(app).patch('/posts/1').send({
       notifications: true,
       text: 'text here',
       media: 'media.png',
     });
 
     expect(res.body).toEqual({
-      id: '21',
-      username: 'test-user',
+      id: expect.any(String),
+      userId: expect.any(String),
       notifications: true,
       text: 'text here',
       media: 'media.png',

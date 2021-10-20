@@ -8,8 +8,8 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
       username: 'test-user',
-      avatar: 'image.png',
       email: 'blah@blah.com',
+      avatar: 'image.png',
     };
     next();
   };
@@ -17,8 +17,8 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 
 const standardUser = {
   username: 'test-user',
-  avatar: 'image.png',
   email: 'blah@blah.com',
+  avatar: 'image.png',
 };
 
 describe('faceSpace /comments routes', () => {
@@ -34,8 +34,8 @@ describe('faceSpace /comments routes', () => {
 
     expect(res.body).toEqual({
       username: 'test-user',
-      avatar: 'image.png',
       email: 'blah@blah.com',
+      avatar: 'image.png',
     });
   });
 

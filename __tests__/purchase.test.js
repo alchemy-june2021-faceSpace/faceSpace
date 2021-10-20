@@ -40,7 +40,8 @@ describe('faceSpace /purchases routes', () => {
     const res = await request(app)
       .post('/purchases')
       .send({
-        itemId: '1'
+        itemId: '1',
+        cost: 15.50
       });
     expect(res.body).toEqual({
       id: expect.any(String),

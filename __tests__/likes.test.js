@@ -52,6 +52,7 @@ describe('faceSpace /likes routes', () => {
       media: 'media.gif',
       notifications: false,
     });
+    await request(app).post('/likes').send({ postId: '1' });
 
     const res = await request(app).get('/likes/1');
 

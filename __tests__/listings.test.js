@@ -21,7 +21,7 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 const standardUser = {
   id: '1',
   username: 'test-user',
-  email: 'test-email@email.com',
+  email: 'test-email-2@email.com',
   avatar: 'image.png',
 };
 
@@ -68,13 +68,21 @@ describe.only('faceSpace routes', () => {
 
   it('should update a listing by id', async() => {
     await User.insert(standardUser);
-    
-    const res = await request(app)
-      .put('/listings/7')
+
+    await request(app)
+      .post('/listings')
       .send({
         description: 'great item',
         price: '$14.50',
         photo: 'image.png'
+      });
+
+    const res = await request(app)
+      .patch('/listings/1')
+      .send({
+        notifications: true,
+        text: 'text here',
+        media: 'media.png',
       });
 
     expect(res.body).toEqual({

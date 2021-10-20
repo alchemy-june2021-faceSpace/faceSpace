@@ -67,6 +67,8 @@ describe.only('faceSpace routes', () => {
   });
 
   it('should update a listing by id', async() => {
+    await User.insert(standardUser);
+    
     const res = await request(app)
       .put('/listings/7')
       .send({

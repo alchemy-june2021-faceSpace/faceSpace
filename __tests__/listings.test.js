@@ -3,8 +3,6 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-// const seedSouth = require('../lib/utils/seedSouth.js');
-// const Listing = require('../lib/models/Listing.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -13,7 +11,6 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
       email: 'test-email@email.com',
       avatar: 'image.png',
     };
-  
     next();
   };
 });
@@ -27,7 +24,6 @@ const standardUser = {
 describe('faceSpace routes', () => {
   beforeEach(async () => {
     await setup(pool);
-    // await seedSouth();
   });
 
   it('posts a new listing to table', async () => {

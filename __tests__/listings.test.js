@@ -25,7 +25,7 @@ const standardUser = {
 };
 
 describe('faceSpace routes', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await setup(pool);
     // await seedSouth();
   });
@@ -47,10 +47,11 @@ describe('faceSpace routes', () => {
       description: 'good item',
       price: '$12.50',
       photo: 'image.png'
+      //commentId: ' '
     });
   });
 
-  it.only('gets a listing by its id', async () => {
+  it('gets a listing by its id', async () => {
     await User.insert(standardUser);
     await request(app)
       .post('/listings')
@@ -74,21 +75,65 @@ describe('faceSpace routes', () => {
 
   it('should update a listing by id', async () => {
     await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'GREAT BUY',
+        price: '$1.50',
+        photo: 'image.png'
+      });
     
     const res = await request(app)
-      .put('/listings/7')
+      .put('/listings/1')
       .send({
-        description: 'great item',
+        description: 'Great Item',
         price: '$14.50',
-        photo: 'image.png'
+        photo: 'www.image.png'
       });
 
     expect(res.body).toEqual({
-      id:'7',
+      id: expect.any(String),
       userId: expect.any(String),
-      description: 'great item',
+      description: 'Great Item',
       price: '$14.50',
-      photo: 'image.png'
+      photo: 'www.image.png'
+    });
+  });
+
+  it.only('should return unauthorized when a user attempts to update a item that they did not post', async () => {
+    await User.insert(standardUser);
+    
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'GREAT BUY',
+        price: '$1.50',
+        photo: 'image.png'
+      });
+    await User.insert({
+      username: 'test-user2',
+      email: 'test2-email@email2.com',
+      avatar: 'image2.png',
+    });
+    await pool.query(
+      'INSERT INTO listings (user_id, description, price, photo) VALUES ($1, $2, $3, $4)',
+      ['2', 'user 2 placed item', '$1.99', 'photo.com']
+    );
+    
+    const res = await request(app)
+      .put('/listings/2')
+      .send({
+        description: 'Great Item',
+        price: '$14.50',
+        photo: 'www.image.png'
+      });
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      userId: expect.any(String),
+      description: 'Great Item',
+      price: '$14.50',
+      photo: 'www.image.png'
     });
   });
 

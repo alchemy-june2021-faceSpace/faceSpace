@@ -24,13 +24,13 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-describe('faceSpace routes', () => {
+describe.skip('faceSpace routes', () => {
   beforeEach(async () => {
     await setup(pool);
     // await seedSouth();
   });
 
-  it.only('posts a new listing to table', async () => {
+  it('posts a new listing to table', async () => {
     await User.insert(standardUser);
 
     const res = await request(app)

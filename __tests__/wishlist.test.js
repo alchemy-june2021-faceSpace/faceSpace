@@ -19,15 +19,15 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 
 const standardUser = {
   username: 'test-user',
-  email: 'test-email-2@email.com',
+  email: 'test-email@email.com',
   avatar: 'image.png',
 };
 
-const testListing = {
-  description: 'testing a get route',
-  price: '$1.99',
-  photo: 'www.fake-photo.com'
-};
+// const testListing = {
+//   description: 'testing a get route',
+//   price: '$1.99',
+//   photo: 'www.fake-photo.com'
+// };
 
 describe.only('faceSpace routes', () => {
   beforeEach(async() => {
@@ -37,15 +37,14 @@ describe.only('faceSpace routes', () => {
 
   it('posts to user wishlist', async () => {
     await User.insert(standardUser);
-    // await request(app)
-    //   .post('/listings')
-    //   .send({
-    //     description: 'text-here',
-    //     price: '15.50',
-    //     photo: 'media.gif'
-    //   });
-    await Listing.insert(testListing);
-
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'text-here',
+        price: 15.50,
+        photo: 'media.gif'
+      });
+    // await Listing.insert(testListing);
     const res = await request(app)
       .post('/wishlist')
       .send({

@@ -58,3 +58,8 @@ CREATE TABLE wishlist (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+-- INSERT INTO users (google_username, google_email, google_avatar_url)
+-- VALUES ('test-user', 'test-email@email.com', 'image.jpg');
+
+-- INSERT INTO listings (user_id, description, price, photo)
+-- VALUES ('1', 'Good stuff', 12.00, 'image.jpg');

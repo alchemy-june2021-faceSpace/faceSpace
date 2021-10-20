@@ -50,14 +50,13 @@ describe('faceSpace routes', () => {
       .send({
         itemId: '1'
       });
-    console.log('AT WISH TEST', res.body);
     expect(res.body).toEqual({
       id: '1',
       itemId: '1',
       userId: '1',
     });
   });
-
+    
   it('should get wishlist item by id', async () => {
     await User.insert(standardUser);
     await request(app)
@@ -67,7 +66,13 @@ describe('faceSpace routes', () => {
         price: 15.50,
         photo: 'media.gif'
       });
-    const res = await request(app).get('/wishlist/1')
+    await request(app)
+      .post('/wishlist')
+      .send({
+        itemId: '1'
+      });
+    const res = await request(app).get('/wishlist/1');
+    console.log('AT WISH TEST', res.body);
     expect(res.body).toEqual({
       id: '1',
       itemId: '1',

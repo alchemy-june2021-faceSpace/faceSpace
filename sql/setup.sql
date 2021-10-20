@@ -67,5 +67,4 @@ CREATE TABLE purchases (
     cost MONEY NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (item_id) REFERENCES listings(id)
-    -- FOREIGN KEY (cost) REFERENCES listings(price)
 );

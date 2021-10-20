@@ -58,6 +58,23 @@ describe('faceSpace routes', () => {
     });
   });
 
+  it('should get wishlist item by id', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'text-here',
+        price: 15.50,
+        photo: 'media.gif'
+      });
+    const res = await request(app).get('/wishlist/1')
+    expect(res.body).toEqual({
+      id: '1',
+      itemId: '1',
+      userId: '1',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

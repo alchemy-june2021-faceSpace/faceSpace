@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS posts CASCADE;
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS listings CASCADE;
+DROP TABLE IF EXISTS wishlist;
 
 
 CREATE TABLE users (
@@ -47,5 +48,13 @@ CREATE TABLE listings (
     FOREIGN KEY(user_id) REFERENCES users(id)
     -- category_id BIGINT NOT NULL,
     -- FOREIGN KEY(category_id) REFERENCES categories(id)
-)
+);
+
+CREATE TABLE wishlist (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    item_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY(item_id) REFERENCES listings(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
 

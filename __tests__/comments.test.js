@@ -72,6 +72,34 @@ describe('faceSpace /comments routes', () => {
     });
   });
 
+  it('should GET all comments', async () => {
+    await User.insert(standardUser);
+
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
+
+    await request(app).post('/comments').send({
+      comment: 'blah-blah',
+      postId: '1',
+    });
+
+    const res = await request(app).get('/comments');
+
+    expect(res.body).toEqual(
+      expect.arrayContaining([
+        {
+          id: expect.any(String),
+          userId: expect.any(String),
+          comment: expect.any(String),
+          postId: expect.any(String),
+        },
+      ])
+    );
+  });
+
   afterAll(() => {
     pool.end();
   });

@@ -41,10 +41,10 @@ describe('faceSpace /comments routes', () => {
     });
 
     expect(res.body).toEqual({
-      id: '1',
+      id: expect.any(String),
       userId: expect.any(String),
       comment: 'blah-blah',
-      postId: '1',
+      postId: expect.any(String),
     });
   });
 
@@ -65,10 +65,10 @@ describe('faceSpace /comments routes', () => {
     const res = await request(app).get('/comments/1');
 
     expect(res.body).toEqual({
-      id: '1',
+      id: expect.any(String),
       userId: expect.any(String),
-      comment: 'blah-blah',
-      postId: '1',
+      comment: expect.any(String),
+      postId: expect.any(String),
     });
   });
 
@@ -117,10 +117,10 @@ describe('faceSpace /comments routes', () => {
     const res = await request(app).delete('/comments/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      comment: 'blah-blah',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      comment: expect.any(String),
+      postId: expect.any(String),
     });
   });
 

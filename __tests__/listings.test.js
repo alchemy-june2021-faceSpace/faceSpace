@@ -3,8 +3,8 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const seedSouth = require('../lib/utils/seedSouth.js');
-const Listing = require('../lib/models/Listing.js');
+// const seedSouth = require('../lib/utils/seedSouth.js');
+// const Listing = require('../lib/models/Listing.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -19,16 +19,15 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 });
 
 const standardUser = {
-  id: '1',
   username: 'test-user',
   email: 'test-email-2@email.com',
   avatar: 'image.png',
 };
 
-describe.only('faceSpace routes', () => {
-  beforeAll(async () => {
+describe('faceSpace routes', () => {
+  beforeEach(async () => {
     await setup(pool);
-    await seedSouth();
+    // await seedSouth();
   });
 
   it('posts a new listing to table', async () => {
@@ -48,16 +47,24 @@ describe.only('faceSpace routes', () => {
       description: 'good item',
       price: '$12.50',
       photo: 'image.png'
+      //commentId: ' '
     });
   });
 
   it('gets a listing by its id', async () => {
-    // const user = await User.insert(standardUser);
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'testing a get route',
+        price: '$1.99',
+        photo: 'www.fake-photo.com'
+      });
     const res = await request(app)
-      .get('/listings/8');
+      .get('/listings/1');
     
     expect(res.body).toEqual({
-      id: '8',
+      id: '1',
       userId: expect.any(String),
       description: expect.any(String),
       price: expect.any(String),
@@ -66,15 +73,22 @@ describe.only('faceSpace routes', () => {
     });
   });
 
-  it('should update a listing by id', async() => {
+  it('should update a listing by id', async () => {
     await User.insert(standardUser);
-
     await request(app)
       .post('/listings')
       .send({
-        description: 'great item',
-        price: '$14.50',
+        description: 'GREAT BUY',
+        price: '$1.50',
         photo: 'image.png'
+      });
+    
+    const res = await request(app)
+      .put('/listings/1')
+      .send({
+        description: 'Great Item',
+        price: '$14.50',
+        photo: 'www.image.png'
       });
 
     const res = await request(app)
@@ -86,19 +100,35 @@ describe.only('faceSpace routes', () => {
       });
 
     expect(res.body).toEqual({
-      id:'7',
+      id: expect.any(String),
       userId: expect.any(String),
-      description: 'great item',
+      description: 'Great Item',
       price: '$14.50',
-      photo: 'image.png'
+      photo: 'www.image.png'
+      //commentId: ' '
     });
   });
 
   it('deletes listing but it\'s id', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'GREAT BUY',
+        price: '$1.50',
+        photo: 'image.png'
+      });
     const res = await request(app)
-      .delete('/listings/5');
+      .delete('/listings/1');
 
-    expect(res.body).toEqual({});
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      userId: expect.any(String),
+      description: 'GREAT BUY',
+      price: '$1.50',
+      photo: 'image.png'
+      //commentId: ' '
+    });
   });
 
   afterAll(() => {

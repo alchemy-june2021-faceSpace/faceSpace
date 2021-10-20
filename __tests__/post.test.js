@@ -21,7 +21,7 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-describe.skip('faceSpace /posts routes', () => {
+describe('faceSpace /posts routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -141,7 +141,7 @@ describe.skip('faceSpace /posts routes', () => {
 
     expect(res.body).toEqual({
       id: '1',
-      userId: '1',
+      userId: expect.any(String),
       notifications: false,
       text: 'text-here',
       media: 'media.gif',

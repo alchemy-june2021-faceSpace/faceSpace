@@ -24,7 +24,7 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-describe.skip('faceSpace routes', () => {
+describe('faceSpace routes', () => {
   beforeEach(async () => {
     await setup(pool);
     // await seedSouth();

@@ -21,7 +21,7 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-describe('faceSpace /likes routes', () => {
+describe.skip('faceSpace /likes routes', () => {
   beforeEach(() => {
     return setup(pool);
   });

@@ -1,7 +1,7 @@
 const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
-const { request } = require('express');
+const request = require('supertest');
 const app = require('../lib/app.js');
 const Listing = require('../lib/models/Listing.js');
 
@@ -17,13 +17,20 @@ const testListing = {
   photo: 'www.fake-photo.com'
 };
 
-describe('faceSpace routes', () => {
+describe.only('faceSpace routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
 
   it('posts to user wishlist', async () => {
     await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'text-here',
+        price: '15.50',
+        photo: 'media.gif'
+      });
     await Listing.insert(testListing);
 
     const res = await request(app)

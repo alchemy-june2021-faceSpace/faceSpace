@@ -26,7 +26,7 @@ describe('faceSpace routes', () => {
     await setup(pool);
   });
 
-  it('posts a category using /categories', async () => {
+  it('posts a category through POST /categories', async () => {
     await User.insert(standardUser);
     const res = await request(app)
       .post('/categories')
@@ -36,6 +36,23 @@ describe('faceSpace routes', () => {
       id: expect.any(String),
       category: expect.any(String)
     });
+  });
+
+  it('gets all categories by calling GET /categories', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Games' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Cars' });
+    const res = await request(app)
+      .get('/categories');
+
+    expect(res.body).toEqual(expect.arrayContaining([{
+      id: expect.any(String),
+      category: expect.any(String)
+    }]));
   });
 
   afterAll(() => {

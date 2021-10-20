@@ -80,6 +80,31 @@ describe('faceSpace routes', () => {
     });
   });
 
+  it('should delete a wishlist item by id and return the deleted item', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'text-here',
+        price: 15.50,
+        photo: 'media.gif'
+      });
+    await request(app)
+      .post('/wishlist')
+      .send({
+        itemId: '1'
+      });
+
+    const res = await request(app)
+      .delete('/wishlist/1');
+
+    expect(res.body).toEqual({
+      id: '1',
+      itemId: '1',
+      userId: '1',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

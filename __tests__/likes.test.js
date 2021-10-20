@@ -63,6 +63,25 @@ describe('faceSpace /likes routes', () => {
     });
   });
 
+  it('should delete a like by id, returning the deleted like', async () => {
+    await User.insert(standardUser);
+
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
+    await request(app).post('/likes').send({ postId: '1' });
+
+    const res = await request(app).delete('/likes/1');
+
+    expect(res.body).toEqual({
+      id: '1',
+      userId: '1',
+      postId: '1',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

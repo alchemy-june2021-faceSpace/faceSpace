@@ -77,6 +77,33 @@ describe('faceSpace /purchases routes', () => {
     });
   });
 
+  it('should remove purchase by it\'s id and return the deleted purchase', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'text-here',
+        price: 15.50,
+        photo: 'media.gif'
+      });
+    await request(app)
+      .post('/purchases')
+      .send({
+        itemId: '1',
+        cost: 15.50
+      });
+
+    const res = await request(app)
+      .delete('/purchases/1');
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      userId: expect.any(String),
+      itemId: expect.any(String),
+      cost: expect.any(String),
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

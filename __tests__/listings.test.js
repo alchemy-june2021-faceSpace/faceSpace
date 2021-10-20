@@ -32,13 +32,17 @@ describe('faceSpace routes', () => {
 
   it('posts a new listing to table', async () => {
     await User.insert(standardUser);
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
 
     const res = await request(app)
       .post('/listings')
       .send({
         description: 'good item',
         price: 12.50,
-        photo: 'image.png'
+        photo: 'image.png',
+        categoryId: '1'
       });
 
     expect(res.body).toEqual({
@@ -46,8 +50,8 @@ describe('faceSpace routes', () => {
       userId: expect.any(String),
       description: 'good item',
       price: '$12.50',
-      photo: 'image.png'
-      //commentId: ' '
+      photo: 'image.png',
+      commentId: expect.any(String)
     });
   });
 

@@ -1,4 +1,4 @@
-const pool = require('./pool.js');
+const pool = require('../lib/utils/pool.js');
 const {
   users,
   posts,
@@ -6,7 +6,7 @@ const {
   likes,
   listings,
   wishlist,
-} = require('./fakeData.js');
+} = require('../lib/utils/fakeData.js');
 
 module.exports = async () => {
   const userEmails = [];

@@ -9,9 +9,10 @@
     "test:watch": "npm run test -- --watch",
     "start": "node -r dotenv/config server.js",
     "start:watch": "nodemon -r dotenv/config server.js",
-    "setup-db": "node -r dotenv/config setup-db.js",
+    "setup-db": "node -r dotenv/config setup-db.js && npm run setup-seed-data",
+    "setup-seed-data": "node data/seedDb.js",
     "setup-heroku": "heroku run npm run setup-db",
-    "setup-staging": "staging run npm run setup-db"
+    "setup-staging": "staging run npm run "
   },
   "jest": {
     "testEnvironment": "node"

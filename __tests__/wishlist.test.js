@@ -3,8 +3,8 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const Listing = require('../lib/models/Listing.js');
-const seedSouth = require('../lib/utils/seedSouth.js');
+// const Listing = require('../lib/models/Listing.js');
+// const seedSouth = require('../lib/utils/seedSouth.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -30,7 +30,7 @@ const standardUser = {
 // };
 
 describe.only('faceSpace routes', () => {
-  beforeEach(async() => {
+  beforeEach(async () => {
     // await seedSouth();
     await setup(pool);
   });

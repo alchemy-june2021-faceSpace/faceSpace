@@ -3,7 +3,7 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const seedSouth = require('../lib/utils/seedSouth.js');
+// const seedSouth = require('../lib/utils/seedSouth.js');
 // const Listing = require('../lib/models/Listing.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {

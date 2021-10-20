@@ -36,7 +36,7 @@ describe('faceSpace routes', () => {
         price: 15.50,
         photo: 'media.gif'
       });
-    // await Listing.insert(testListing);
+
     const res = await request(app)
       .post('/wishlist')
       .send({

@@ -51,7 +51,7 @@ CREATE TABLE listings (
     description TEXT,
     price MONEY NOT NULL,
     photo TEXT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id),
     category_id BIGINT NOT NULL,
     FOREIGN KEY(category_id) REFERENCES categories(id)
 );

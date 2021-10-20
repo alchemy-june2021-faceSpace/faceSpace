@@ -51,18 +51,24 @@ describe('faceSpace routes', () => {
       description: 'good item',
       price: '$12.50',
       photo: 'image.png',
-      commentId: expect.any(String)
+      categoryId: expect.any(String)
     });
   });
 
   it('gets a listing by its id', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'testing a get route',
         price: 1.99,
-        photo: 'www.fake-photo.com'
+        photo: 'www.fake-photo.com',
+        categoryId: '1'
       });
     const res = await request(app)
       .get('/listings/1');
@@ -72,19 +78,25 @@ describe('faceSpace routes', () => {
       userId: expect.any(String),
       description: expect.any(String),
       price: expect.any(String),
-      photo: expect.any(String)
-      // commentId: ''
+      photo: expect.any(String),
+      categoryId: expect.any(String)
     });
   });
 
   it('should update a listing by id', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'GREAT BUY',
         price: '$1.50',
-        photo: 'image.png'
+        photo: 'image.png',
+        categoryId: '1'
       });
     
     const res = await request(app)
@@ -92,7 +104,8 @@ describe('faceSpace routes', () => {
       .send({
         description: 'Great Item',
         price: '$14.50',
-        photo: 'www.image.png'
+        photo: 'www.image.png',
+        categoryId: '1'
       });
 
     expect(res.body).toEqual({
@@ -100,19 +113,25 @@ describe('faceSpace routes', () => {
       userId: expect.any(String),
       description: 'Great Item',
       price: '$14.50',
-      photo: 'www.image.png'
-      //commentId: ' '
+      photo: 'www.image.png',
+      categoryId: expect.any(String)
     });
   });
 
   it('deletes listing but it\'s id', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'GREAT BUY',
         price: '$1.50',
-        photo: 'image.png'
+        photo: 'image.png',
+        categoryId: '1'
       });
     const res = await request(app)
       .delete('/listings/1');
@@ -122,8 +141,8 @@ describe('faceSpace routes', () => {
       userId: expect.any(String),
       description: 'GREAT BUY',
       price: '$1.50',
-      photo: 'image.png'
-      //commentId: ' '
+      photo: 'image.png',
+      categoryId: expect.any(String)
     });
   });
 

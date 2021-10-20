@@ -97,9 +97,9 @@ describe('faceSpace routes', () => {
       description: 'Great Item',
       price: '$14.50',
       photo: 'www.image.png'
+      //commentId: ' '
     });
   });
-
 
   it('deletes listing but it\'s id', async () => {
     await User.insert(standardUser);
@@ -115,10 +115,11 @@ describe('faceSpace routes', () => {
 
     expect(res.body).toEqual({
       id: expect.any(String),
-      user_id: expect.any(String),
+      userId: expect.any(String),
       description: 'GREAT BUY',
       price: '$1.50',
       photo: 'image.png'
+      //commentId: ' '
     });
   });
 

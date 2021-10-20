@@ -16,7 +16,7 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 });
 
 const standardUser = {
-  username: 'test-commenter',
+  username: 'test-user',
   avatar: 'image.png',
   email: 'blah@blah.com',
 };

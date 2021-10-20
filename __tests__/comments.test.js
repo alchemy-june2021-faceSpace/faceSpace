@@ -100,6 +100,30 @@ describe('faceSpace /comments routes', () => {
     );
   });
 
+  it('should DELETE a comment by id', async () => {
+    await User.insert(standardUser);
+
+    await request(app).post('/posts').send({
+      text: 'text-here',
+      media: 'media.gif',
+      notifications: false,
+    });
+
+    await request(app).post('/comments').send({
+      comment: 'blah-blah',
+      postId: '1',
+    });
+
+    const res = await request(app).delete('/comments/1');
+
+    expect(res.body).toEqual({
+      id: '1',
+      userId: '1',
+      comment: 'blah-blah',
+      postId: '1',
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

@@ -3,8 +3,7 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const Listing = require('../lib/models/Listing.js');
-const seedSouth = require('../lib/utils/seedSouth.js');
+
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -23,15 +22,8 @@ const standardUser = {
   avatar: 'image.png',
 };
 
-// const testListing = {
-//   description: 'testing a get route',
-//   price: '$1.99',
-//   photo: 'www.fake-photo.com'
-// };
-
 describe('faceSpace routes', () => {
   beforeEach(async() => {
-    // await seedSouth();
     await setup(pool);
   });
 
@@ -51,9 +43,9 @@ describe('faceSpace routes', () => {
         itemId: '1'
       });
     expect(res.body).toEqual({
-      id: '1',
-      itemId: '1',
-      userId: '1',
+      id: expect.any(String),
+      itemId: expect.any(String),
+      userId: expect.any(String),
     });
   });
     
@@ -73,9 +65,9 @@ describe('faceSpace routes', () => {
       });
     const res = await request(app).get('/wishlist/1');
     expect(res.body).toEqual({
-      id: '1',
-      itemId: '1',
-      userId: '1',
+      id: expect.any(String),
+      itemId: expect.any(String),
+      userId: expect.any(String),
     });
   });
   
@@ -96,12 +88,10 @@ describe('faceSpace routes', () => {
       
     const res = await request(app)
       .delete('/wishlist/1');
-      
-    console.log('AT WISH TEST', res.body);
     expect(res.body).toEqual({
-      id: '1',
-      itemId: '1',
-      userId: '1',
+      id: expect.any(String),
+      itemId: expect.any(String),
+      userId: expect.any(String),
     });
   });
 

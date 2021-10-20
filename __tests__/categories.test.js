@@ -46,6 +46,7 @@ describe('faceSpace routes', () => {
     await request(app)
       .post('/categories')
       .send({ category: 'Cars' });
+      
     const res = await request(app)
       .get('/categories');
 
@@ -53,6 +54,24 @@ describe('faceSpace routes', () => {
       id: expect.any(String),
       category: expect.any(String)
     }]));
+  });
+
+  it('get categories by id by calling GET /categories/:id', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Games' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Cars' });
+
+    const res = await request(app)
+      .get('/categories/2');
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      category: expect.any(String)
+    });
   });
 
   afterAll(() => {

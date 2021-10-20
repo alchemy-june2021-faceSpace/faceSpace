@@ -72,14 +72,13 @@ describe('faceSpace routes', () => {
         itemId: '1'
       });
     const res = await request(app).get('/wishlist/1');
-    console.log('AT WISH TEST', res.body);
     expect(res.body).toEqual({
       id: '1',
       itemId: '1',
       userId: '1',
     });
   });
-
+  
   it('should delete a wishlist item by id and return the deleted item', async () => {
     await User.insert(standardUser);
     await request(app)
@@ -94,10 +93,11 @@ describe('faceSpace routes', () => {
       .send({
         itemId: '1'
       });
-
+      
     const res = await request(app)
       .delete('/wishlist/1');
-
+      
+    console.log('AT WISH TEST', res.body);
     expect(res.body).toEqual({
       id: '1',
       itemId: '1',

@@ -57,6 +57,11 @@ describe('faceSpace /comments routes', () => {
       notifications: false,
     });
 
+    await request(app).post('/comments').send({
+      comment: 'blah-blah',
+      postId: '1',
+    });
+
     const res = await request(app).get('/comments/1');
 
     expect(res.body).toEqual({

@@ -21,7 +21,7 @@ const standardUser = {
   email: 'blah@blah.com',
 };
 
-describe.skip('faceSpace /comments routes', () => {
+describe('faceSpace /comments routes', () => {
   beforeEach(() => {
     return setup(pool);
   });

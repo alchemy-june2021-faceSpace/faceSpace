@@ -29,7 +29,7 @@ const standardUser = {
 //   photo: 'www.fake-photo.com'
 // };
 
-describe.only('faceSpace routes', () => {
+describe('faceSpace routes', () => {
   beforeEach(async() => {
     // await seedSouth();
     await setup(pool);

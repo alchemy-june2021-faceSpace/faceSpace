@@ -46,7 +46,6 @@ describe('faceSpace /likes routes', () => {
 
   it('should get a like by id', async () => {
     await User.insert(standardUser);
-
     await request(app).post('/posts').send({
       text: 'text-here',
       media: 'media.gif',

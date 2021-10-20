@@ -141,7 +141,7 @@ describe('faceSpace /posts routes', () => {
 
     expect(res.body).toEqual({
       id: '1',
-      userId: '1',
+      userId: expect.any(String),
       notifications: false,
       text: 'text-here',
       media: 'media.gif',

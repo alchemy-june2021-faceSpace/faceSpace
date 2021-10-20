@@ -3,8 +3,8 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const seedSouth = require('../lib/utils/seedSouth.js');
-const Listing = require('../lib/models/Listing.js');
+// const seedSouth = require('../lib/utils/seedSouth.js');
+// const Listing = require('../lib/models/Listing.js');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -19,16 +19,15 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
 });
 
 const standardUser = {
-  id: '1',
   username: 'test-user',
   email: 'test-email@email.com',
   avatar: 'image.png',
 };
 
-describe.only('faceSpace routes', () => {
+describe('faceSpace routes', () => {
   beforeAll(async () => {
     await setup(pool);
-    await seedSouth();
+    // await seedSouth();
   });
 
   it('posts a new listing to table', async () => {
@@ -51,13 +50,20 @@ describe.only('faceSpace routes', () => {
     });
   });
 
-  it('gets a listing by its id', async () => {
-    // const user = await User.insert(standardUser);
+  it.only('gets a listing by its id', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'testing a get route',
+        price: '$1.99',
+        photo: 'www.fake-photo.com'
+      });
     const res = await request(app)
-      .get('/listings/8');
+      .get('/listings/1');
     
     expect(res.body).toEqual({
-      id: '8',
+      id: '1',
       userId: expect.any(String),
       description: expect.any(String),
       price: expect.any(String),
@@ -66,7 +72,7 @@ describe.only('faceSpace routes', () => {
     });
   });
 
-  it('should update a listing by id', async() => {
+  it('should update a listing by id', async () => {
     await User.insert(standardUser);
     
     const res = await request(app)
@@ -86,12 +92,12 @@ describe.only('faceSpace routes', () => {
     });
   });
 
-  it('deletes listing but it\'s id', async () => {
-    const res = await request(app)
-      .delete('/listings/5');
+  // it('deletes listing but it\'s id', async () => {
+  //   const res = await request(app)
+  //     .delete('/listings/5');
 
-    expect(res.body).toEqual({});
-  });
+  //   expect(res.body).toEqual({});
+  // });
 
   afterAll(() => {
     pool.end();

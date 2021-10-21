@@ -13,7 +13,7 @@
     "setup-seed-data": "node -r dotenv/config ./data/setup-seed-db.js",
     "setup-heroku": "heroku run npm run setup-db",
     "setup-staging": "staging run npm run setup-seed-data",
-    "heroku-config": "heroku addons:create heroku-postgresql:hobby-dev --remote staging && heroku config:set PGSSLMODE=require --remote staging && heroku config:get DATABASE_URL --remote staging"
+    "heroku-config": "heroku addons:create heroku-postgresql:hobby-dev --remote heroku && heroku config:set PGSSLMODE=require --remote heroku && heroku config:get DATABASE_URL --remote heroku"
   },
   "jest": {
     "testEnvironment": "node"

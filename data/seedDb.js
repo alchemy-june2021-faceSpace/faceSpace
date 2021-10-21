@@ -6,6 +6,8 @@ const {
   likes,
   listings,
   wishlist,
+  categories,
+  purchases,
 } = require('../lib/utils/fakeData.js');
 
 module.exports = async () => {
@@ -15,8 +17,8 @@ module.exports = async () => {
     return Math.ceil(Math.random() * userEmails.length).toString();
   };
 
-  // adding users to the DB
-  for (let i = 0; i < 5; i++) {
+  // users
+  for (let i = 0; i < 1234; i++) {
     const fakeUser = users();
     userEmails.push(fakeUser.google_email);
     await pool.query(
@@ -28,8 +30,9 @@ module.exports = async () => {
       ]
     );
   }
-  // adding posts to the DB
-  for (let i = 0; i < 20; i++) {
+
+  // posts
+  for (let i = 0; i < 8000; i++) {
     const randomUserId = getRandomUserId();
     const fakePost = posts(randomUserId);
     await pool.query(
@@ -37,9 +40,10 @@ module.exports = async () => {
       [fakePost.user_id, fakePost.media_url, fakePost.text]
     );
   }
-  // adding comments to the DB
-  for (let i = 0; i < 60; i++) {
-    const randomPostId = Math.ceil(Math.random() * 20).toString(); // the random number * num needs to be the total number of posts
+
+  // comments
+  for (let i = 0; i < 60000; i++) {
+    const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
     const fakeComment = comments(randomUserId, randomPostId);
     await pool.query(
@@ -48,9 +52,9 @@ module.exports = async () => {
     );
   }
 
-  // adding likes to the DB
-  for (let i = 0; i < 867; i++) {
-    const randomPostId = Math.ceil(Math.random() * 20).toString(); // the random number * num needs to be the total number of posts
+  // likes
+  for (let i = 0; i < 86700; i++) {
+    const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
     const fakeLike = likes(randomUserId, randomPostId);
     await pool.query('INSERT INTO likes (user_id, post_id) VALUES ($1, $2)', [
@@ -60,11 +64,12 @@ module.exports = async () => {
   }
 
   // listings
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 2000; i++) {
     const randomUserId = Math.ceil(Math.random() * 5).toString();
-    const fakeListing = listings(randomUserId);
+    const randomCategoryId = Math.ceil(Math.random() * 50).toString();
+    const fakeListing = listings(randomUserId, randomCategoryId);
     await pool.query(
-      'INSERT INTO listings (user_id, description, price, photo) VALUES ($1, $2, $3, $4)',
+      'INSERT INTO listings (user_id, description, price, photo, ) VALUES ($1, $2, $3, $4)',
       [
         fakeListing.user_id,
         fakeListing.description,
@@ -75,7 +80,7 @@ module.exports = async () => {
   }
 
   // wishlists
-  for (let i = 0; i < 55; i++) {
+  for (let i = 0; i < 5500; i++) {
     const randomItemId = Math.ceil(Math.random() * 30).toString();
     const randomUserId = getRandomUserId();
     const fakeWishlist = wishlist(randomItemId, randomUserId);
@@ -85,14 +90,22 @@ module.exports = async () => {
     );
   }
 
-  //TODO purchases
-  // for (let i = 0; i < 15; i++) {
-  //   const randomUserId = getRandomUserId();
-  //   const randomItemId = Math.ceil(Math.random() * 30).toString();
-  //   const fakePurchase = purchases(randomUserId, randomItemId);
-  //   await pool.query(
-  //     'INSERT INTO purchases (user_id, item_id, cost) VALUES ($1, $2, $3)'
-  //   );
-  // }
-  //TODO categories
+  // purchases
+  for (let i = 0; i < 4000; i++) {
+    const randomUserId = getRandomUserId();
+    const randomItemId = Math.ceil(Math.random() * 30).toString();
+    const fakePurchase = purchases(randomUserId, randomItemId);
+    await pool.query(
+      'INSERT INTO purchases (user_id, item_id, cost) VALUES ($1, $2, $3)',
+      [fakePurchase.user_id, fakePurchase.item_id, fakePurchase.cost]
+    );
+  }
+
+  // categories
+  for (let i = 0; i < 50; i++) {
+    const fakeCategory = categories();
+    await pool.query('INSERT INTO categories (category) VALUES ($1)', [
+      fakeCategory.category,
+    ]);
+  }
 };

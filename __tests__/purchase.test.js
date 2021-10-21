@@ -29,12 +29,18 @@ describe('faceSpace /purchases routes', () => {
 
   it('should post to purchases table', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+      
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: '1'
       });
 
     const res = await request(app)
@@ -53,12 +59,18 @@ describe('faceSpace /purchases routes', () => {
 
   it('gets a purchase by it\'s id', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: '1'
       });
     await request(app)
       .post('/purchases')
@@ -79,12 +91,18 @@ describe('faceSpace /purchases routes', () => {
 
   it('should remove purchase by it\'s id and return the deleted purchase', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: '1'
       });
     await request(app)
       .post('/purchases')

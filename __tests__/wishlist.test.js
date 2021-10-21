@@ -4,7 +4,6 @@ const User = require('../lib/models/User.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 
-
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
@@ -23,18 +22,24 @@ const standardUser = {
 };
 
 describe('faceSpace routes', () => {
-  beforeEach(async() => {
+  beforeEach(async () => {
     await setup(pool);
   });
 
   it('posts to user wishlist', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: '1'
       });
 
     const res = await request(app)
@@ -51,12 +56,18 @@ describe('faceSpace routes', () => {
     
   it('should get wishlist item by id', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: 1
       });
     await request(app)
       .post('/wishlist')
@@ -73,12 +84,18 @@ describe('faceSpace routes', () => {
   
   it('should delete a wishlist item by id and return the deleted item', async () => {
     await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'Food and Drink' });
+
     await request(app)
       .post('/listings')
       .send({
         description: 'text-here',
         price: 15.50,
-        photo: 'media.gif'
+        photo: 'media.gif',
+        categoryId: '1'
       });
     await request(app)
       .post('/wishlist')

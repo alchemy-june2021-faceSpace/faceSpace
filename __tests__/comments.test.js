@@ -14,6 +14,7 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
     next();
   };
 });
+
 jest.mock('twilio', () => () => ({
   messages: {
     create: jest.fn()

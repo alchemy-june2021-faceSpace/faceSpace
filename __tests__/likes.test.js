@@ -14,10 +14,11 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
     next();
   };
 });
+
 jest.mock('twilio', () => () => ({
   messages: {
-    create: jest.fn()
-  }
+    create: jest.fn(),
+  },
 }));
 
 const standardUser = {
@@ -51,11 +52,13 @@ describe('faceSpace /likes routes', () => {
 
   it('should get a like by id', async () => {
     await User.insert(standardUser);
+
     await request(app).post('/posts').send({
       text: 'text-here',
       media: 'media.gif',
       notifications: false,
     });
+
     await request(app).post('/likes').send({ postId: '1' });
 
     const res = await request(app).get('/likes/1');
@@ -75,6 +78,7 @@ describe('faceSpace /likes routes', () => {
       media: 'media.gif',
       notifications: false,
     });
+
     await request(app).post('/likes').send({ postId: '1' });
 
     const res = await request(app).delete('/likes/1');

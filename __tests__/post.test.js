@@ -14,10 +14,11 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
     next();
   };
 });
+
 jest.mock('twilio', () => () => ({
   messages: {
-    create: jest.fn()
-  }
+    create: jest.fn(),
+  },
 }));
 
 const standardUser = {
@@ -46,10 +47,6 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
-      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
-      // comments: expect.arrayContaining([
-      //   { username: expect.any(String), comment: expect.any(String) },
-      // ]),
     });
   });
 
@@ -70,10 +67,6 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
-      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
-      // comments: expect.arrayContaining([
-      //   { username: expect.any(String), comment: expect.any(String) },
-      // ]),
     });
   });
 
@@ -96,10 +89,6 @@ describe('faceSpace /posts routes', () => {
           notifications: expect.anything(),
           text: expect.any(String),
           media: expect.any(String),
-          // likes: expect.arrayContaining([{ username: expect.any(String) }]),
-          // comments: expect.arrayContaining([
-          //   { username: expect.any(String), comment: expect.any(String) },
-          // ]),
         },
       ])
     );
@@ -126,10 +115,6 @@ describe('faceSpace /posts routes', () => {
       notifications: true,
       text: 'text here',
       media: 'media.png',
-      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
-      // comments: expect.arrayContaining([
-      //   { username: expect.any(String), comment: expect.any(String) },
-      // ]),
     });
   });
 
@@ -150,10 +135,6 @@ describe('faceSpace /posts routes', () => {
       notifications: false,
       text: 'text-here',
       media: 'media.gif',
-      // likes: expect.arrayContaining([{ username: expect.any(String) }]),
-      // comments: expect.arrayContaining([
-      //   { username: expect.any(String), comment: expect.any(String) },
-      // ]),
     });
   });
 

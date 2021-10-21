@@ -34,6 +34,7 @@ describe('faceSpace routes', () => {
 
   it('posts a new listing to table', async () => {
     await User.insert(standardUser);
+
     await request(app)
       .put('/user/1')
       .send({
@@ -80,6 +81,7 @@ describe('faceSpace routes', () => {
         photo: 'www.fake-photo.com',
         categoryId: '1'
       });
+
     const res = await request(app)
       .get('/listings/1');
     
@@ -143,6 +145,7 @@ describe('faceSpace routes', () => {
         photo: 'image.png',
         categoryId: '1'
       });
+
     const res = await request(app)
       .delete('/listings/1');
 
@@ -162,6 +165,7 @@ describe('faceSpace routes', () => {
     await request(app)
       .post('/categories')
       .send({ category: 'cars' });
+
     await request(app)
       .post('/categories')
       .send({ category: 'furniture' });
@@ -174,6 +178,7 @@ describe('faceSpace routes', () => {
         photo: 'image.png',
         categoryId: '1'
       });
+
     await request(app)
       .post('/listings')
       .send({
@@ -182,6 +187,7 @@ describe('faceSpace routes', () => {
         photo: 'image.png',
         categoryId: '1'
       });
+      
     await request(app)
       .post('/listings')
       .send({

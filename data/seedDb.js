@@ -6,7 +6,6 @@ const {
   likes,
   listings,
   wishlist,
-  // categories,
   purchases,
 } = require('../lib/utils/fakeData.js');
 
@@ -109,15 +108,6 @@ const seedPurchasesTable = async () => {
   }
 };
 
-// const seedCategoriesTable = async () => {
-//   for (let i = 0; i < 10; i++) {
-//     const fakeCategory = categories();
-//     await pool.query('INSERT INTO categories (category) VALUES ($1)', [
-//       fakeCategory.category,
-//     ]);
-//   }
-// };
-
 module.exports = {
   seedUsersTable,
   seedPostsTable,
@@ -126,5 +116,4 @@ module.exports = {
   seedListingsTable,
   seedWishlistTable,
   seedPurchasesTable,
-  // seedCategoriesTable,
 };

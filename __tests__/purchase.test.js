@@ -170,13 +170,13 @@ describe('faceSpace /purchases routes', () => {
     const res = await request(app)
       .get('/purchases/my-purchases');
 
-    expect(res.body).toEqual({
+    expect(res.body).toEqual(expect.arrayContaining([{
       username: expect.any(String),
       description: expect.any(String),
       photo: expect.any(String),
       cost: expect.any(String),
       category: expect.any(String),
-    });
+    }]));
   });
 
   afterAll(() => {

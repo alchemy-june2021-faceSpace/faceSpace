@@ -104,7 +104,7 @@ describe('faceSpace routes', () => {
       .post('/listings')
       .send({
         description: 'GREAT BUY',
-        price: '$1.50',
+        price: 1.50,
         photo: 'image.png',
         categoryId: '1'
       });
@@ -113,7 +113,7 @@ describe('faceSpace routes', () => {
       .put('/listings/1')
       .send({
         description: 'Great Item',
-        price: '$14.50',
+        price: 14.50,
         photo: 'www.image.png',
         categoryId: '1'
       });
@@ -139,7 +139,7 @@ describe('faceSpace routes', () => {
       .post('/listings')
       .send({
         description: 'GREAT BUY',
-        price: '$1.50',
+        price: 1.50,
         photo: 'image.png',
         categoryId: '1'
       });
@@ -154,6 +154,52 @@ describe('faceSpace routes', () => {
       photo: 'image.png',
       categoryId: expect.any(String)
     });
+  });
+
+  it('should return a list of items ordered by category', async () => {
+    await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'cars' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'furniture' });
+
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Toyota Corolla',
+        price: 1500,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Nissan',
+        price: 2100,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Couch',
+        price: 100.50,
+        photo: 'image.png',
+        categoryId: '2'
+      });
+
+    const res = await request(app)
+      .get('/listings/cars');
+
+    expect(res.body).toEqual(expect.arrayContaining([{
+      description: expect.any(String),
+      price: expect.any(String),
+      photo: expect.any(String),
+      category: 'cars'
+    }]));
   });
 
   afterAll(() => {

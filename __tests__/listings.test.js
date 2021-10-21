@@ -3,7 +3,7 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const twilio = require('twilio');
+// const twilio = require('twilio');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -16,11 +16,11 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
-jest.mock('twilio', () => () => ({
-  messages: {
-    create: jest.fn()
-  }
-}));
+// jest.mock('twilio', () => () => ({
+//   messages: {
+//     create: jest.fn()
+//   }
+// }));
 
 const standardUser = {
   username: 'test-user',
@@ -33,8 +33,15 @@ describe('faceSpace routes', () => {
     await setup(pool);
   });
 
-  it('posts a new listing to table', async () => {
+  it.only('posts a new listing to table', async () => {
     await User.insert(standardUser);
+    await request(app)
+      .put('/user/1')
+      .send({
+        username: 'test-user-phone',
+        avatar: 'image-2.png',
+        phone: '+13609537287'
+      });
     await request(app)
       .post('/categories')
       .send({ category: 'Food and Drink' });

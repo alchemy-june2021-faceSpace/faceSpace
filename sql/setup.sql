@@ -13,7 +13,7 @@ CREATE TABLE users (
     google_username TEXT NOT NULL,
     google_email TEXT NOT NULL UNIQUE,
     google_avatar_url TEXT,
-    phone_number numeric(10)
+    phone_number VARCHAR(256)
 );
 
 CREATE TABLE posts (

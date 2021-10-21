@@ -32,17 +32,18 @@ describe('faceSpace /user routes', () => {
     const res = await request(app)
       .put('/user/1')
       .send({
-        username: 'test-user-phone1',
+        username: 'test-user-phone',
         avatar: 'image-2.png',
-        phone: 3601234567
+        phone: '+13601234567'
       });
+    console.log('RES', Number('+13609537287'));
 
     expect(res.body).toEqual({
       id: '1',
       username: expect.any(String),
       email: expect.any(String),
       avatar: expect.any(String),
-      phone: '3601234567'
+      phone: '+13601234567'
     });
   });
 
@@ -51,7 +52,7 @@ describe('faceSpace /user routes', () => {
 
     const res = await request(app)
       .delete('/user/1');
-    console.log('RES', res.body);
+    
     expect(res.body).toEqual({
       id: expect.any(String),
       username: expect.any(String),

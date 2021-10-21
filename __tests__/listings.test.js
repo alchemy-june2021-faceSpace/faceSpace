@@ -192,13 +192,13 @@ describe('faceSpace routes', () => {
       });
 
     const res = await request(app)
-      .get('/listings/cars');
+      .get('/listings/category/1');
 
     expect(res.body).toEqual(expect.arrayContaining([{
       description: expect.any(String),
       price: expect.any(String),
       photo: expect.any(String),
-      category: 'cars'
+      category: expect.any(String)
     }]));
   });
 

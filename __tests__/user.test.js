@@ -38,9 +38,9 @@ describe('faceSpace /comments routes', () => {
 
     expect(res.body).toEqual({
       id: '1',
-      username: 'test-user',
-      email: 'blah@blah.com',
-      avatar: 'image-2.png',
+      username: expect.any(String),
+      email: expect.any(String),
+      avatar: expect.any(String),
     });
   });
 
@@ -51,10 +51,10 @@ describe('faceSpace /comments routes', () => {
       .delete('/user/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      username: 'test-user',
-      email: 'blah@blah.com',
-      avatar: 'image.png',
+      id: expect.any(String),
+      username: expect.any(String),
+      email: expect.any(String),
+      avatar: expect.any(String),
     });
   });
 

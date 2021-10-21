@@ -138,6 +138,74 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
+  it('gets number of likes associated with a post', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/posts')
+      .send({
+        text: 'text-here',
+        media: 'media.gif',
+        notifications: false,
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    const res = await request(app).get('/posts/likes/1');
+
+    expect(res.body).toEqual({
+      count: '2'
+    });
+  });
+
+  it('gets a post object in its entirety including array of likes and array of comments', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/posts')
+      .send({
+        text: 'text-here',
+        media: 'media.gif',
+        notifications: false,
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    await request(app)
+      .post('/comments')
+      .send({
+        comment: 'blah-blah',
+        postId: '1' });
+    await request(app)
+      .post('/comments')
+      .send({
+        comment: 'more-blah',
+        postId: '1' });
+    const res = await request(app).get('/posts/details/1');
+
+    expect(res.body).toEqual({
+      username: 'test-user',
+      text: 'text-here',
+      media: 'media.gif',
+      likes: expect.arrayContaining([{ username: expect.any(String) }]),
+      comments: expect.arrayContaining([
+        { username: expect.any(String), comment: expect.any(String) },
+      ]),
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

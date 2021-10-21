@@ -33,8 +33,15 @@ describe('faceSpace routes', () => {
     await setup(pool);
   });
 
-  it('posts a new listing to table', async () => {
+  it.only('posts a new listing to table', async () => {
     await User.insert(standardUser);
+    await request(app)
+      .put('/user/1')
+      .send({
+        username: 'test-user-phone',
+        avatar: 'image-2.png',
+        phone: '+13609537287'
+      });
     await request(app)
       .post('/categories')
       .send({ category: 'Food and Drink' });

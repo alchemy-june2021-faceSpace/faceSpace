@@ -6,18 +6,19 @@ const {
   likes,
   listings,
   wishlist,
-  categories,
+  // categories,
   purchases,
 } = require('../lib/utils/fakeData.js');
 
 const userEmails = [];
 
 const getRandomUserId = () => {
-  return Math.ceil(Math.random() * userEmails.length).toString();
+  if (userEmails.length)
+    return Math.ceil(Math.random() * userEmails.length).toString();
 };
 
 const seedUsersTable = async () => {
-  for (let i = 0; i < 1234; i++) {
+  for (let i = 0; i < 500; i++) {
     const fakeUser = users();
     userEmails.push(fakeUser.google_email);
     await pool.query(
@@ -32,7 +33,7 @@ const seedUsersTable = async () => {
 };
 
 const seedPostsTable = async () => {
-  for (let i = 0; i < 8000; i++) {
+  for (let i = 0; i < 4000; i++) {
     const randomUserId = getRandomUserId();
     const fakePost = posts(randomUserId);
     await pool.query(
@@ -43,7 +44,7 @@ const seedPostsTable = async () => {
 };
 
 const seedCommentsTable = async () => {
-  for (let i = 0; i < 60000; i++) {
+  for (let i = 0; i < 8000; i++) {
     const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
     const fakeComment = comments(randomUserId, randomPostId);
@@ -55,7 +56,7 @@ const seedCommentsTable = async () => {
 };
 
 const seedLikesTable = async () => {
-  for (let i = 0; i < 86700; i++) {
+  for (let i = 0; i < 8600; i++) {
     const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
     const fakeLike = likes(randomUserId, randomPostId);
@@ -67,26 +68,27 @@ const seedLikesTable = async () => {
 };
 
 const seedListingsTable = async () => {
-  for (let i = 0; i < 2000; i++) {
-    const randomUserId = getRandomUserId();
-    const randomCategoryId = Math.ceil(Math.random() * 50).toString();
+  for (let i = 0; i < 800; i++) {
+    const randomUserId = Math.ceil(Math.random() * 500).toString();
+    const randomCategoryId = Math.ceil(Math.random() * 12).toString();
     const fakeListing = listings(randomUserId, randomCategoryId);
     await pool.query(
-      'INSERT INTO listings (user_id, description, price, photo, ) VALUES ($1, $2, $3, $4)',
+      'INSERT INTO listings (user_id, description, price, photo, category_id) VALUES ($1, $2, $3, $4, $5)',
       [
         fakeListing.user_id,
         fakeListing.description,
         fakeListing.price,
         fakeListing.photo,
+        fakeListing.category_id,
       ]
     );
   }
 };
 
 const seedWishlistTable = async () => {
-  for (let i = 0; i < 5500; i++) {
-    const randomItemId = Math.ceil(Math.random() * 30).toString();
-    const randomUserId = getRandomUserId();
+  for (let i = 0; i < 300; i++) {
+    const randomItemId = Math.ceil(Math.random() * 800).toString();
+    const randomUserId = Math.ceil(Math.random() * 500).toString();
     const fakeWishlist = wishlist(randomItemId, randomUserId);
     await pool.query(
       'INSERT INTO wishlist (item_id, user_id) VALUES ($1, $2)',
@@ -96,9 +98,9 @@ const seedWishlistTable = async () => {
 };
 
 const seedPurchasesTable = async () => {
-  for (let i = 0; i < 4000; i++) {
-    const randomUserId = getRandomUserId();
-    const randomItemId = Math.ceil(Math.random() * 30).toString();
+  for (let i = 0; i < 100; i++) {
+    const randomUserId = Math.ceil(Math.random() * 500).toString();
+    const randomItemId = Math.ceil(Math.random() * 800).toString();
     const fakePurchase = purchases(randomUserId, randomItemId);
     await pool.query(
       'INSERT INTO purchases (user_id, item_id, cost) VALUES ($1, $2, $3)',
@@ -107,14 +109,15 @@ const seedPurchasesTable = async () => {
   }
 };
 
-const seedCategoriesTable = async () => {
-  for (let i = 0; i < 50; i++) {
-    const fakeCategory = categories();
-    await pool.query('INSERT INTO categories (category) VALUES ($1)', [
-      fakeCategory.category,
-    ]);
-  }
-};
+// const seedCategoriesTable = async () => {
+//   for (let i = 0; i < 10; i++) {
+//     const fakeCategory = categories();
+//     await pool.query('INSERT INTO categories (category) VALUES ($1)', [
+//       fakeCategory.category,
+//     ]);
+//   }
+// };
+
 module.exports = {
   seedUsersTable,
   seedPostsTable,
@@ -123,5 +126,5 @@ module.exports = {
   seedListingsTable,
   seedWishlistTable,
   seedPurchasesTable,
-  seedCategoriesTable,
+  // seedCategoriesTable,
 };

@@ -1,26 +1,30 @@
 const {
-  seedUsersTable,
-  seedPostsTable,
-  seedCommentsTable,
-  seedLikesTable,
-  seedListingsTable,
-  seedWishlistTable,
+  // seedUsersTable,
+  // seedPostsTable,
+  // seedCommentsTable,
+  // seedLikesTable,
+  // seedListingsTable,
+  // seedWishlistTable,
   seedPurchasesTable,
-  seedCategoriesTable,
+  // seedCategoriesTable,
 } = require('./seedDb.js');
 
-seedUsersTable();
+const seedTheTables = async () => {
+  // await seedUsersTable();
 
-seedPostsTable();
+  // await seedPostsTable();
 
-seedCommentsTable();
+  // await seedCommentsTable();
 
-seedLikesTable();
+  // await seedLikesTable();
 
-seedListingsTable();
+  // await seedCategoriesTable();
 
-seedWishlistTable();
+  // await seedListingsTable();
 
-seedPurchasesTable();
+  // await seedWishlistTable();
 
-seedCategoriesTable();
+  await seedPurchasesTable();
+};
+
+seedTheTables();

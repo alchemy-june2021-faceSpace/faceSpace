@@ -152,6 +152,32 @@ describe('faceSpace /posts routes', () => {
     });
   });
 
+  it('gets number of likes associated with a post', async () => {
+    await User.insert(standardUser);
+    await request(app)
+      .post('/posts')
+      .send({
+        text: 'text-here',
+        media: 'media.gif',
+        notifications: false,
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    await request(app)
+      .post('/likes')
+      .send({
+        postId: '1'
+      });
+    const res = await request(app).countLikes('/posts/1');
+
+    expect(res.body).toEqual({
+      count: '2'
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });

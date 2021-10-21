@@ -11,8 +11,9 @@ CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     google_username TEXT NOT NULL,
     google_email TEXT NOT NULL UNIQUE,
-    google_avatar_url TEXT
-);
+    google_avatar_url TEXT,
+    user_phone VARCHAR(10)
+    );
 
 CREATE TABLE posts (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

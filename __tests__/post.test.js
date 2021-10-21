@@ -210,9 +210,9 @@ describe('faceSpace /posts routes', () => {
     const res = await request(app).get('/posts/details/1');
 
     expect(res.body).toEqual({
+      username: 'test-user',
       text: 'text-here',
       media: 'media.gif',
-      notifications: false,
       likes: expect.arrayContaining([{ username: expect.any(String) }]),
       comments: expect.arrayContaining([
         { username: expect.any(String), comment: expect.any(String) },

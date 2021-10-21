@@ -12,7 +12,8 @@ CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     google_username TEXT NOT NULL,
     google_email TEXT NOT NULL UNIQUE,
-    google_avatar_url TEXT
+    google_avatar_url TEXT,
+    phone_number numeric(10)
 );
 
 CREATE TABLE posts (
@@ -65,7 +66,6 @@ CREATE TABLE wishlist (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-
 CREATE TABLE purchases (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -74,3 +74,16 @@ CREATE TABLE purchases (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (item_id) REFERENCES listings(id)
 );
+
+-- INSERT INTO categories (category) VALUES ('Fitness');
+-- INSERT INTO categories (category) VALUES ('Garden');
+-- INSERT INTO categories (category) VALUES ('Health');
+-- INSERT INTO categories (category) VALUES ('Car');
+-- INSERT INTO categories (category) VALUES ('Bike');
+-- INSERT INTO categories (category) VALUES ('Home Goods');
+-- INSERT INTO categories (category) VALUES ('Tools');
+-- INSERT INTO categories (category) VALUES ('Entertainment');
+-- INSERT INTO categories (category) VALUES ('Jewelry');
+-- INSERT INTO categories (category) VALUES ('Music');
+-- INSERT INTO categories (category) VALUES ('Sporting Goods');
+-- INSERT INTO categories (category) VALUES ('Books');

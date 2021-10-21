@@ -15,6 +15,12 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
+jest.mock('twilio', () => () => ({
+  messages: {
+    create: jest.fn(),
+  },
+}));
+
 const standardUser = {
   username: 'test-user',
   email: 'test-email@email.com',
@@ -38,27 +44,29 @@ describe('faceSpace /likes routes', () => {
     const res = await request(app).post('/likes').send({ postId: '1' });
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 
   it('should get a like by id', async () => {
     await User.insert(standardUser);
+
     await request(app).post('/posts').send({
       text: 'text-here',
       media: 'media.gif',
       notifications: false,
     });
+
     await request(app).post('/likes').send({ postId: '1' });
 
     const res = await request(app).get('/likes/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 
@@ -70,14 +78,15 @@ describe('faceSpace /likes routes', () => {
       media: 'media.gif',
       notifications: false,
     });
+
     await request(app).post('/likes').send({ postId: '1' });
 
     const res = await request(app).delete('/likes/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 

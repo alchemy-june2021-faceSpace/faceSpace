@@ -7,21 +7,21 @@ const User = require('../lib/models/User.js');
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'test-user',
-      email: 'blah@blah.com',
-      avatar: 'image.png',
+      username: 'test-user-phone',
+      email: 'blah-phone@blah.com',
+      avatar: 'image-phone.png',
     };
     next();
   };
 });
 
 const standardUser = {
-  username: 'test-user',
-  email: 'blah@blah.com',
-  avatar: 'image.png',
+  username: 'test-user-phone',
+  email: 'blah-phone@blah.com',
+  avatar: 'image-phone.png',
 };
 
-describe('faceSpace /comments routes', () => {
+describe('faceSpace /user routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -32,8 +32,9 @@ describe('faceSpace /comments routes', () => {
     const res = await request(app)
       .put('/user/1')
       .send({
-        username: 'test-user',
+        username: 'test-user-phone1',
         avatar: 'image-2.png',
+        phone: 3601234567
       });
 
     expect(res.body).toEqual({
@@ -41,6 +42,7 @@ describe('faceSpace /comments routes', () => {
       username: expect.any(String),
       email: expect.any(String),
       avatar: expect.any(String),
+      phone: '3601234567'
     });
   });
 
@@ -55,6 +57,7 @@ describe('faceSpace /comments routes', () => {
       username: expect.any(String),
       email: expect.any(String),
       avatar: expect.any(String),
+      phone: null
     });
   });
 

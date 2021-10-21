@@ -10,14 +10,13 @@ const {
   purchases,
 } = require('../lib/utils/fakeData.js');
 
-module.exports = async () => {
-  const userEmails = [];
+const userEmails = [];
 
-  const getRandomUserId = () => {
-    return Math.ceil(Math.random() * userEmails.length).toString();
-  };
+const getRandomUserId = () => {
+  return Math.ceil(Math.random() * userEmails.length).toString();
+};
 
-  // users
+const seedUsersTable = async () => {
   for (let i = 0; i < 1234; i++) {
     const fakeUser = users();
     userEmails.push(fakeUser.google_email);
@@ -30,8 +29,9 @@ module.exports = async () => {
       ]
     );
   }
+};
 
-  // posts
+const seedPostsTable = async () => {
   for (let i = 0; i < 8000; i++) {
     const randomUserId = getRandomUserId();
     const fakePost = posts(randomUserId);
@@ -40,8 +40,9 @@ module.exports = async () => {
       [fakePost.user_id, fakePost.media_url, fakePost.text]
     );
   }
+};
 
-  // comments
+const seedCommentsTable = async () => {
   for (let i = 0; i < 60000; i++) {
     const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
@@ -51,8 +52,9 @@ module.exports = async () => {
       [fakeComment.user_id, fakeComment.comment, fakeComment.post_id]
     );
   }
+};
 
-  // likes
+const seedLikesTable = async () => {
   for (let i = 0; i < 86700; i++) {
     const randomPostId = Math.ceil(Math.random() * 20).toString();
     const randomUserId = getRandomUserId();
@@ -62,10 +64,11 @@ module.exports = async () => {
       fakeLike.post_id,
     ]);
   }
+};
 
-  // listings
+const seedListingsTable = async () => {
   for (let i = 0; i < 2000; i++) {
-    const randomUserId = Math.ceil(Math.random() * 5).toString();
+    const randomUserId = getRandomUserId();
     const randomCategoryId = Math.ceil(Math.random() * 50).toString();
     const fakeListing = listings(randomUserId, randomCategoryId);
     await pool.query(
@@ -78,8 +81,9 @@ module.exports = async () => {
       ]
     );
   }
+};
 
-  // wishlists
+const seedWishlistTable = async () => {
   for (let i = 0; i < 5500; i++) {
     const randomItemId = Math.ceil(Math.random() * 30).toString();
     const randomUserId = getRandomUserId();
@@ -89,8 +93,9 @@ module.exports = async () => {
       [fakeWishlist.item_id, fakeWishlist.user_id]
     );
   }
+};
 
-  // purchases
+const seedPurchasesTable = async () => {
   for (let i = 0; i < 4000; i++) {
     const randomUserId = getRandomUserId();
     const randomItemId = Math.ceil(Math.random() * 30).toString();
@@ -100,12 +105,23 @@ module.exports = async () => {
       [fakePurchase.user_id, fakePurchase.item_id, fakePurchase.cost]
     );
   }
+};
 
-  // categories
+const seedCategoriesTable = async () => {
   for (let i = 0; i < 50; i++) {
     const fakeCategory = categories();
     await pool.query('INSERT INTO categories (category) VALUES ($1)', [
       fakeCategory.category,
     ]);
   }
+};
+module.exports = {
+  seedUsersTable,
+  seedPostsTable,
+  seedCommentsTable,
+  seedLikesTable,
+  seedListingsTable,
+  seedWishlistTable,
+  seedPurchasesTable,
+  seedCategoriesTable,
 };

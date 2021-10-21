@@ -1,3 +1,26 @@
-const seedDb = require('./seedDb.js');
+const {
+  seedUsersTable,
+  seedPostsTable,
+  seedCommentsTable,
+  seedLikesTable,
+  seedListingsTable,
+  seedWishlistTable,
+  seedPurchasesTable,
+  seedCategoriesTable,
+} = require('./seedDb.js');
 
-seedDb();
+seedUsersTable();
+
+seedPostsTable();
+
+seedCommentsTable();
+
+seedLikesTable();
+
+seedListingsTable();
+
+seedWishlistTable();
+
+seedPurchasesTable();
+
+seedCategoriesTable();

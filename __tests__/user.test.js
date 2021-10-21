@@ -51,7 +51,7 @@ describe('faceSpace /user routes', () => {
 
     const res = await request(app)
       .delete('/user/1');
-
+    console.log('RES', res.body);
     expect(res.body).toEqual({
       id: expect.any(String),
       username: expect.any(String),

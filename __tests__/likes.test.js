@@ -38,9 +38,9 @@ describe('faceSpace /likes routes', () => {
     const res = await request(app).post('/likes').send({ postId: '1' });
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 
@@ -56,9 +56,9 @@ describe('faceSpace /likes routes', () => {
     const res = await request(app).get('/likes/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 
@@ -75,9 +75,9 @@ describe('faceSpace /likes routes', () => {
     const res = await request(app).delete('/likes/1');
 
     expect(res.body).toEqual({
-      id: '1',
-      userId: '1',
-      postId: '1',
+      id: expect.any(String),
+      userId: expect.any(String),
+      postId: expect.any(String),
     });
   });
 

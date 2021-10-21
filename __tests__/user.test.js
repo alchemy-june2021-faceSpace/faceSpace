@@ -34,31 +34,37 @@ describe('faceSpace /user routes', () => {
       .send({
         username: 'test-user-phone',
         avatar: 'image-2.png',
-        phone: '+13601234567'
+        phone: 3601234567
       });
-    console.log('RES', Number('+13609537287'));
 
     expect(res.body).toEqual({
       id: '1',
       username: expect.any(String),
       email: expect.any(String),
       avatar: expect.any(String),
-      phone: '+13601234567'
+      phone: '3601234567'
     });
   });
 
   it('should delete the users profile returning the deleted user', async () => {
     await User.insert(standardUser);
 
+    await request(app)
+      .put('/user/1')
+      .send({
+        username: 'test-user-phone',
+        avatar: 'image-2.png',
+        phone: 3601234567
+      });
     const res = await request(app)
       .delete('/user/1');
-    
+
     expect(res.body).toEqual({
       id: expect.any(String),
       username: expect.any(String),
       email: expect.any(String),
       avatar: expect.any(String),
-      phone: null
+      phone: '3601234567'
     });
   });
 

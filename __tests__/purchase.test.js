@@ -15,6 +15,12 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
+jest.mock('twilio', () => () => ({
+  messages: {
+    create: jest.fn()
+  }
+}));
+
 const standardUser = {
   username: 'test-user',
   avatar: 'image.png',

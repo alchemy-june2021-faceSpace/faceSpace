@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS listings CASCADE;
 DROP TABLE IF EXISTS wishlist;
+DROP TABLE IF EXISTS purchases;
 
 
 CREATE TABLE users (
@@ -64,8 +65,12 @@ CREATE TABLE wishlist (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
--- INSERT INTO users (google_username, google_email, google_avatar_url)
--- VALUES ('test-user', 'test-email@email.com', 'image.jpg');
 
--- INSERT INTO listings (user_id, description, price, photo)
--- VALUES ('1', 'Good stuff', 12.00, 'image.jpg');
+CREATE TABLE purchases (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    item_id BIGINT NOT NULL,
+    cost MONEY NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (item_id) REFERENCES listings(id)
+);

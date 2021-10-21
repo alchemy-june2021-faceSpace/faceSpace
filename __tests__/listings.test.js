@@ -3,7 +3,7 @@ const setup = require('../data/setup.js');
 const User = require('../lib/models/User.js');
 const app = require('../lib/app.js');
 const request = require('supertest');
-const twilio = require('twilio');
+// const twilio = require('twilio');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -16,11 +16,11 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
-jest.mock('twilio', () => () => ({
-  messages: {
-    create: jest.fn()
-  }
-}));
+// jest.mock('twilio', () => () => ({
+//   messages: {
+//     create: jest.fn()
+//   }
+// }));
 
 const standardUser = {
   username: 'test-user',

@@ -207,6 +207,96 @@ describe('faceSpace routes', () => {
       category: expect.any(String)
     }]));
   });
+  it('should organize items in listings priced low to high', async () => {
+    await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'cars' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'furniture' });
+
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Toyota Corolla',
+        price: 1500,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Nissan',
+        price: 2100,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Couch',
+        price: 100.50,
+        photo: 'image.png',
+        categoryId: '2'
+      });
+
+    const res = await request(app)
+      .get('/listings/price-low-to-high');
+
+    expect(res.body).toEqual(expect.arrayContaining([{
+      description: expect.any(String),
+      price: expect.any(String),
+      photo: expect.any(String),
+      category: expect.any(String)
+    }]));
+  });
+  it('should organize items in listings priced high to low', async () => {
+    await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'cars' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'furniture' });
+
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Toyota Corolla',
+        price: 1500,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Nissan',
+        price: 2100,
+        photo: 'image.png',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'Couch',
+        price: 100.50,
+        photo: 'image.png',
+        categoryId: '2'
+      });
+
+    const res = await request(app)
+      .get('/listings/price-high-to-low');
+
+    expect(res.body).toEqual(expect.arrayContaining([{
+      description: expect.any(String),
+      price: expect.any(String),
+      photo: expect.any(String),
+      category: expect.any(String)
+    }]));
+  });
 
   afterAll(() => {
     pool.end();

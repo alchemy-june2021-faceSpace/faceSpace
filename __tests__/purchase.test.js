@@ -111,6 +111,57 @@ describe('faceSpace /purchases routes', () => {
     });
   });
 
+  it('should get all the purchases for a given user', async () => {
+    await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'dishware' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'cars' });
+      
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'plates',
+        price: 15.50,
+        photo: 'media.gif',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'kia optima',
+        price: 1750,
+        photo: 'media.gif',
+        categoryId: '2'
+      });
+
+    await request(app)
+      .post('/purchases')
+      .send({
+        itemId: '1',
+        cost: 15.50
+      });
+    await request(app)
+      .post('/purchases')
+      .send({
+        itemId: '2',
+        cost: 15.50
+      });
+    const res = await request(app)
+      .get('/purchases/my-purchases');
+
+    expect(res.body).toEqual(expect.arrayContaining([{
+      username: expect.any(String),
+      description: expect.any(String),
+      photo: expect.any(String),
+      cost: expect.any(String),
+      category: expect.any(String),
+    }]));
+  });
+
   afterAll(() => {
     pool.end();
   });

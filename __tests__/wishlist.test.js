@@ -105,6 +105,53 @@ describe('faceSpace routes', () => {
     });
   });
 
+  it('gets a users wishlist items', async () => {
+    await User.insert(standardUser);
+
+    await request(app)
+      .post('/categories')
+      .send({ category: 'shoes' });
+    await request(app)
+      .post('/categories')
+      .send({ category: 'clothes' });
+
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'nike',
+        price: 15.50,
+        photo: 'media.gif',
+        categoryId: '1'
+      });
+    await request(app)
+      .post('/listings')
+      .send({
+        description: 'leggings',
+        price: 10,
+        photo: 'media.gif',
+        categoryId: '2'
+      });
+
+    await request(app)
+      .post('/wishlist')
+      .send({
+        itemId: '1'
+      });
+    await request(app)
+      .post('/wishlist')
+      .send({
+        itemId: '2'
+      });
+    const res = await request(app)
+      .get('/wishlist/my-wishlist');
+    expect(res.body).toEqual(expect.arrayContaining([{
+      username: expect.any(String),
+      description: expect.any(String),
+      price: expect.any(String),
+      category: expect.any(String),
+    }]));
+  });
+
   afterAll(() => {
     pool.end();
   });

@@ -19,6 +19,8 @@ Work on weekend will be avoided.
 Break times on the hour, minimum every 2 hours.
 
 
-Main Deploy: https://facespacemain.herokuapp.com/
+#Main FaceSpace Deploy:
+https://facespacemain.herokuapp.com/
 
-Staging Deploy: https://facespacedev.herokuapp.com/
+#Staging Deploy: 
+https://facespacedev.herokuapp.com/

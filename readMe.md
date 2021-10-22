@@ -17,3 +17,8 @@ Morning standups to go over the daily goals and any barriers related to impeding
 MERGE TIME: 11:45ish, 4:45ish
 Work on weekend will be avoided.
 Break times on the hour, minimum every 2 hours.
+
+
+Main Deploy: https://facespacemain.herokuapp.com/
+
+Staging Deploy: https://facespacedev.herokuapp.com/

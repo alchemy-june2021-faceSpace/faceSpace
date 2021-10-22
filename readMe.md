@@ -22,5 +22,5 @@ Break times on the hour, minimum every 2 hours.
 # Main FaceSpace Deploy:
 * https://facespacemain.herokuapp.com/
 
-# Staging Deploy: 
+# Staging FaceSpace Deploy: 
 * https://facespacedev.herokuapp.com/
